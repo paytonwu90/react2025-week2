@@ -4,13 +4,8 @@ import axios from 'axios'
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
 
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function LoginForm({ onLoginSuccess, onLoginFailure }) {
   const [formData, setFormData] = useState({
-    //TODO: 要記得把帳密改成空字串
     username: "",
     password: "",
   });
@@ -18,7 +13,6 @@ function LoginForm({ onLoginSuccess, onLoginFailure }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    //console.log(formData);
     setIsLoading(true);
     await login();
     setIsLoading(false);
@@ -27,7 +21,6 @@ function LoginForm({ onLoginSuccess, onLoginFailure }) {
   async function login() {
     try {
       const response = await axios.post(`${API_BASE}/admin/signin`, formData);
-      console.log('login, response.data:', response.data);
       const { token, expired } = response.data;
       onLoginSuccess(token, expired);
     } catch (error) {
